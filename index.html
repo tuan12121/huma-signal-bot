@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HUMA Signal Bot</title>
+    <script>
+        function startBot() {
+            fetch('/start').then(res => res.json()).then(updateStatus);
+        }
+        function stopBot() {
+            fetch('/stop').then(res => res.json()).then(updateStatus);
+        }
+        function updateStatus() {
+            fetch('/status')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('status').innerText = data.running ? 'Running' : 'Stopped';
+                    document.getElementById('signal').innerText = data.last_signal;
+                    document.getElementById('candle').innerText = data.last_candle_time;
+                });
+        }
+        setInterval(updateStatus, 5000);
+    </script>
+</head>
+<body onload="updateStatus()">
+    <h1>HUMA/USDT Signal Bot</h1>
+    <button onclick="startBot()">▶ Start Bot</button>
+    <button onclick="stopBot()">⏹ Stop Bot</button>
+    <p>Status: <span id="status">Unknown</span></p>
+    <p>Last Signal: <span id="signal">-</span></p>
+    <p>Last Candle: <span id="candle">-</span></p>
+</body>
+</html>
