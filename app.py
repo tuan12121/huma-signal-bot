@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify
 import threading, time
 from binance_api import get_recent_candles
-from strategies import signal_generator
+from signal_generator import signal_generator
 
 app = Flask(__name__)
 
